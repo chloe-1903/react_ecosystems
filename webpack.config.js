@@ -1,5 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 
 module.exports = {
     entry: './src/index.js',
@@ -7,15 +10,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                options: { presets: ["@babel/env"] }
+                test: /\.[jt]sx?$/,
+                exclude: /node_modules/,
+                use: [
+                {
+                    loader: require.resolve('babel-loader'),
+                    options: {
+                    plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
+                    },
+                },
+                ],
             },
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
-            }
+            },
         ]
     },
     resolve: { extensions: ['*', '.js', '.jsx'] },
@@ -34,5 +43,5 @@ module.exports = {
            publicPath: "https://localhost:3000/dist/",
         }
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()]
+    plugins: [isDevelopment && new ReactRefreshWebpackPlugin()].filter(Boolean),
 };
