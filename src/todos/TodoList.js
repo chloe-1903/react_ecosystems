@@ -3,12 +3,19 @@ import NewTodoForm from './NewTodoForm';
 import TodoListItem from './TodoListItem';
 import './TodoList.css';
 import { connect } from 'react-redux';
-import { removeTodo } from './actions';
+import { completeTodo, removeTodo } from './actions';
 
-const TodoList = ({todos = [], onRemovedPressed}) => (
+const TodoList = ({todos = [], onRemovedPressed, onCompletePressed}) => (
     <div className='list-wrapper'>
         <NewTodoForm />
-        {todos.map((todo) => <TodoListItem key={todo.id} todo={todo} onRemovedPressed={onRemovedPressed} />)}
+        {todos.map((todo) => (
+            <TodoListItem 
+                key={todo.id} 
+                todo={todo}
+                onCompletePressed={onCompletePressed}
+                onRemovedPressed={onRemovedPressed}
+            />
+        ))}
     </div>
 )
 
@@ -17,7 +24,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    onRemovedPressed: id => dispatch(removeTodo(id))
+    onRemovedPressed: id => dispatch(removeTodo(id)),
+    onCompletePressed: id => dispatch(completeTodo(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
