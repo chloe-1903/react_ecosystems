@@ -4,7 +4,7 @@ import TodoListItem from './TodoListItem';
 import './TodoList.css';
 import { connect } from 'react-redux';
 import { completeTodo, removeTodo } from './actions';
-import { displayAlert, loadTodos } from './thunks';
+import { displayAlert, loadTodos, removeTodoRequest } from './thunks';
 import { isLoading } from './reducers';
 
 const TodoList = ({todos = [], onRemovedPressed, onCompletePressed, isLoading, startLoadingTodos}) => {
@@ -34,7 +34,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     startLoadingTodos: () => dispatch(loadTodos()),
-    onRemovedPressed: id => dispatch(removeTodo(id)),
+    onRemovedPressed: id => dispatch(removeTodoRequest(id)),
     onCompletePressed: id => dispatch(completeTodo(id))
 })
 
