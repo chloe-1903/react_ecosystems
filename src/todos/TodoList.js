@@ -4,6 +4,7 @@ import TodoListItem from './TodoListItem';
 import './TodoList.css';
 import { connect } from 'react-redux';
 import { completeTodoRequest, loadTodos, removeTodoRequest } from './thunks';
+import { getIsLoading, getTodos } from './selectors';
 
 const TodoList = ({todos = [], onRemovedPressed, onCompletePressed, isLoading, startLoadingTodos}) => {
     useEffect(() => {
@@ -26,8 +27,8 @@ const TodoList = ({todos = [], onRemovedPressed, onCompletePressed, isLoading, s
 }
 
 const mapStateToProps = state => ({
-    isLoading: state.isLoading,
-    todos: state.todos
+    isLoading: getIsLoading(state),
+    todos: getTodos(state)
 });
 
 const mapDispatchToProps = dispatch => ({
