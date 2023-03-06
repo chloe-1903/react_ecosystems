@@ -21,9 +21,9 @@ export const createTodo = (todo) => ({
 });
 
 export const REMOVE_TODO = 'REMOVE_TODO';
-export const removeTodo = (todo) => ({
+export const removeTodo = (id) => ({
     type: REMOVE_TODO, 
-    payload: {todo}
+    payload: {id}
 });
 
 

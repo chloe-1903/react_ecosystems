@@ -28,8 +28,8 @@ export const todos = (state = [], action) => {
             return state.concat(todo);
         }
         case REMOVE_TODO: {
-            const { todo: todoToRemove } = payload;
-            return state.filter(todo => todo.id != todoToRemove.id);
+            const { id } = payload;
+            return state.filter(todo => todo.id != id);
         }
         case COMPLETE_TODO: {
             const { id } = payload;
@@ -37,6 +37,7 @@ export const todos = (state = [], action) => {
                 if (todo.id === id) {
                     return {...todo, isCompleted: true}
                 }
+                return todo;
             });
         }
         case LOAD_TODOS_SUCCESS: {
