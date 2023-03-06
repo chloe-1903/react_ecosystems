@@ -1,4 +1,4 @@
-import { createTodo, loadTodosFailure, loadTodosInProgress, loadTodosSuccess } from "./actions";
+import { removeTodo, createTodo, loadTodosFailure, loadTodosInProgress, loadTodosSuccess } from "./actions";
 
 
 export const loadTodos = () => async (dispatch, getState) => {
@@ -13,7 +13,7 @@ export const loadTodos = () => async (dispatch, getState) => {
     }
 }
 
-export const addTodo = (text) => async (dispatch, getState) => {
+export const addTodoRequest = (text) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({text});
         const response = await fetch('http://localhost:8080/todos', {
@@ -25,6 +25,18 @@ export const addTodo = (text) => async (dispatch, getState) => {
         });
         const todo = await response.json();
         dispatch(createTodo(todo));
+    } catch (error) {
+        dispatch(displayAlert(error))
+    }
+}
+
+export const removeTodoRequest = (id) => async (dispatch, getState) => {
+    try {
+        const response = await fetch(`http://localhost:8080/todos/${id}`, {
+            method: 'delete'
+        });
+        const removedTodo = await response.json();
+        dispatch(removeTodo(removedTodo));
     } catch (error) {
         dispatch(displayAlert(error))
     }
