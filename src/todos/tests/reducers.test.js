@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { todos } from "../todos/reducers";
+import { todos } from "../reducers";
 
 describe('The todos reducer', () => {
     it('Add a new todo when CREATE_TODO action is received', () => {
